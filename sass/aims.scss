@@ -1,0 +1,155 @@
+html,body{
+	height: 100%;
+	width: 100%;
+	font-family: 'Open Sans', sans-serif;
+}
+
+*{
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+
+
+img{
+	width: 100%;
+}
+
+.header{
+	.logo-wrap{
+		width: 50%;
+	}
+	.header-social-nt{
+		li{
+			list-style: none;
+			display: inline-block;
+			a{
+				display: inline-block;
+				background:#919191;
+				width: 50px;
+				height: 50px;
+				border-radius: 100%;
+				text-align: center;
+				font-size: 28px;
+				color: #fff;
+				vertical-align: middle;
+				i{
+					margin-top: 50%;
+					transform:translate(0, -50%);
+				}
+			}
+		}
+	}
+}
+
+.navbar{
+	padding:0;
+	margin:0;
+}
+.navbar-default{
+	background:#ec1a2e;
+	border-radius: 0;
+	.navbar-nav{
+		margin:0;
+		>li{
+				position: relative;
+			a{
+				color: #fff;
+				font-weight: 600;
+				font-size: 18px;
+				display: block;
+				padding:15px 20px;
+				-webkit-transition: 0.5s;
+				-moz-transition: 0.5s;
+				-ms-transition: 0.5s;
+				-o-transition: 0.5s;
+				transition: 0.5s;
+				&:hover,&:focus{
+					color:#fff;
+					background:#C30E20;
+				}
+			}
+			&.active{
+				a{
+					background:#C30E20;
+					color: #fff;
+					&:hover,&:focus{
+						background:#C30E20;
+						color: #fff;
+					}
+				}
+			}
+			.sub-menu-ul{
+					position: absolute;
+					left: 0;
+					width: 100%;
+					top:50px;
+					/*opacity: 0;
+					visibility: hidden;*/
+					display: none;
+					background:#090;
+					z-index: 10;
+				li{
+					text-align: center;
+					list-style: none;
+					a{
+						&:hover,&:focus{
+							background:#000;
+						}
+					}
+				}
+			}
+			&:hover{
+				background:#C30E20;
+
+				.sub-menu-ul{
+					/*opacity: 1;
+					visibility: visible;*/
+					display: block;
+					position: absolute;
+				}
+			}
+		}
+	}
+}
+
+.navbar-collapse{
+	padding:0;
+}
+
+.navbar-collapse.in{
+	overflow-y:inherit;
+}
+
+@media only screen and (min-width: 768px){
+	/*.navbar-default{
+		.navbar-nav{
+			>li{
+
+				-webkit-transition: 0.5s;
+				-moz-transition: 0.5s;
+				-ms-transition: 0.5s;
+				-o-transition: 0.5s;
+				transition: 0.5s;
+				&:hover{
+					.sub-menu-ul{
+						opacity: 1;
+						visibility: visible;
+						-webkit-transition: 0.5s;
+						-moz-transition: 0.5s;
+						-ms-transition: 0.5s;
+						-o-transition: 0.5s;
+						transition: 0.5s;
+					}
+				}
+			}
+		}
+	}*/
+}
+@media only screen and (max-width: 767px){
+.navbar-default .navbar-nav > li:hover .sub-menu-ul{
+	display: none;
+	/*position: static;*/
+
+}
+}
