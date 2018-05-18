@@ -54,6 +54,12 @@
 				</section>
 
 				<section>
+					<h3>What is a Git workflow?</h3>
+					<small>(Guideline, No universal solution, Use what works best for the team)</small>
+					<img src="git-workflow.png">
+				</section>
+
+				<section>
 					<h3>Well Known Git workflow</h3>
 					<ul>
 						<li>Centralize Workflow</li>
@@ -62,6 +68,7 @@
 						<li>Gitlab Workflow</li>
 						<li>Gitflow Workflow</li>
 						<li>Github Workflow</li>
+						<li>Simple Git Workflow</li>
 					</ul>
 				</section>
 
@@ -73,6 +80,46 @@
 						<li>Multiple branches with different roles.</li>
 						<li>Type of branches: Main branches and Support Brances</li>
 					</ul>
+				</section>
+
+				<section>
+					<h3>Workflow of Gitflow</h3>
+					<img src="images/main-branch.png">
+				</section>
+
+				<section>
+					<h3>Workflow of Gitflow (Contd...)</h3>
+					<img src="images/feature-branch.png">
+				</section>
+
+				<section>
+					<h3>Workflow of Gitflow (Contd...)</h3>
+					<img src="images/release-branch.png">
+				</section>
+
+				<section>
+					<h3>Workflow of Gitflow (Contd...)</h3>
+					<img src="images/release-branch-master.png">
+				</section>
+
+				<section>
+					<h3>Workflow of Gitflow (Contd...)</h3>
+					<img src="images/release-branch-develop.png">
+				</section>
+
+				<section>
+					<h3>Workflow of Gitflow (Contd...)</h3>
+					<img src="images/hotfix-branch.png">
+				</section>
+
+				<section>
+					<h3>Workflow of Gitflow (Contd...)</h3>
+					<img src="images/hotfix-branch-master.png">
+				</section>
+
+				<section>
+					<h3>Workflow of Gitflow (Contd...)</h3>
+					<img src="images/hotfix-branch-develop.png">
 				</section>
 
 				<section>
@@ -127,7 +174,6 @@
 							
 							git add .
 							git commit -m "Descriptive and meaningful commit message"
-							git pull origin develop
 							git push -u origin task-1
 
 							// open pull request (PR) on git server
@@ -304,6 +350,120 @@
 							git branch -d hotfix-0.1.1
 						</code>
 					</pre>
+				</section>
+
+				<section>
+					<h3>Criticism</h3>
+					<ul>
+						<li>Too complex</li>
+						<li>Master and develop split is redundant</li>
+						<li>--no-ff flag creates messy Git history</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Hard to read</h3>
+					<img src="images/messy-history.png">
+				</section>
+
+				<section>
+					<h3>Fast forward vs no fast forward</h3>
+					<img src="images/ff-no-ff.png">
+				</section>
+
+				<section>
+					<h3>Github flow</h3>
+					<ul>
+						<li>Focused on feature branch</li>
+						<li>Only one main branch: master</li>
+						<li>No supporting branch</li>
+						<li>No broken code in master</li>
+						<li>Ideal for continuous integration and continuous delivery</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Flow</h3>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							// Switch to master and pull current state
+							git checkout master
+							git pull orgin master
+
+							git checkout -b feature-1
+
+							// Make some changes
+							
+							git add .
+							git commit -m "Descriptive and meaningful commit message"
+							git push -u origin feature-1
+
+							// open pull request (PR) on git server
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Flow (Contd...)</h3>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							/**
+							 * Switch to master and pull current state
+							 */
+							git checkout master
+							git pull origin master
+
+							git fetch origin feature-1
+							git merge feature-1
+
+							git push origin master
+
+							// close pull request (PR)
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Conclusion</h3>
+					<ul>
+						<li>Choose a workflow effective for your team.</li>
+						<li>May be create your own workflow.</li>
+						<li>Achieve goals in a consistent way.</li>
+						<li>Increase productivity.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Credits</h3>
+					<ul>
+						<li>
+							<a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a>
+						</li>
+						<li>
+							<a href="https://sandofsky.com/blog/git-workflow.html">Understanding the Git Workflow</a>
+						</li>
+						<li>
+							<a href="https://www.atlassian.com/continuous-delivery/continuous-delivery-workflows-with-feature-branching-and-gitflow">Continuous delivery workflows with the branch-per-issue model</a>
+						</li>
+						<li>
+							<a href="https://www.atlassian.com/git/tutorials/comparing-workflows">Atlassian's Blog</a>
+						</li>
+						<li>
+							<a href="https://guides.github.com/introduction/flow/">Github Guide</a>
+						</li>
+						<li>
+							<a href="https://about.gitlab.com/2014/09/29/gitlab-flow/">Gitlab flow</a>
+						</li>
+						<li>
+							<a href="http://endoflineblog.com/gitflow-considered-harmful">GitFlow considered harmful</a>
+						</li>
+						<li>
+							<a href="http://endoflineblog.com/oneflow-a-git-branching-model-and-workflow">OneFlow Article</a>
+						</li>
+						<li>
+							<a href="https://medium.com/@fredrikmorken/why-you-should-stop-using-git-rebase-5552bee4fed1">Why you should stop using Git rebase</a>
+						</li>
+					</ul>
 				</section>
 
 				<section style="text-align: left;">
