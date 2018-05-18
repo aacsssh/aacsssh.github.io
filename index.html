@@ -1,13 +1,19 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 	<head>
 		<meta charset="utf-8">
+
+		<title>Git workflow</title>
+		<meta name="author" content="Aashish Gurung">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
-
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -20,30 +26,636 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
 	</head>
+
 	<body>
+
 		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>Git Workflow</h1>
+					<h4>Using Git effectively and consistently</h4>
+				</section>
+
+				<section>
+					<h3>Why Git workflow?</h3>
+					<ul>
+						<li>To control series of changes.</li>
+						<li>Standardize a way among the members of a team.</li>
+						<li>Achieve goals in a consistent way.</li>
+						<li>Increase productivity.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Well Known Git workflow</h3>
+					<ul>
+						<li>Centralize Workflow</li>
+						<li>Featre Branch Workflow</li>
+						<li>Forking Workflow</li>
+						<li>Gitlab Workflow</li>
+						<li>Gitflow Workflow</li>
+						<li>Github Workflow</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Gitflow Workflow</h3>
+					<ul>
+						<li>Publishedd by Vincent Driessen</li>
+						<li>Based on Feature Branch workflow</li>
+						<li>Multiple branches with different roles.</li>
+						<li>Type of branches: Main branches and Support Brances</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Main Branches</h3>
+					<ul>
+						<li>Two main branches</li>
+						<li>Life time: never ending</li>
+						<li>master: Always production ready</li>
+						<li>develop: Always mirrors the current development state</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Support Branches</h3>
+					<ul>
+						<li>Help in side by side development between team members</li>
+						<li>Short lived branches</li>
+						<li>No fixed number of branches</li>
+						<li>Typically 3 branches</li>
+						<li>Feature branches, Release branches and Hotfix branches</li>
+						<li>Branching off and merging strategy is strictly binded.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Support Branches: Feature</h3>
+					<ul>
+						<li>Develop features scheduled for the next release</li>
+						<li>One feature, One branch</li>
+						<li>Life time: till feature is in development</li>
+						<li>Naming Convention: anything-*
+							<ul>
+								<li>Excpet master, develop, release-*, hotfix-*</li>
+							</ul>
+						</li>
+						<li>Branch off from: develop</li>
+						<li>Merge back to: develop</li>
+					</ul>
+				</section>
+
+				<section>
+					<h4>Starting feature branch</h4>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							// new feature branch off develop & switch to it
+							git checkout -b task-1 develop
+
+							// Alternative
+							git checkout develop && git checkout -b task-1
+
+							// Make some changes. Add new feature
+							
+							git add .
+							git commit -m "Descriptive and meaningful commit message"
+							git pull origin develop
+							git push -u origin task-1
+
+							// open pull request (PR) on git server
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Review on Pull Request</h3>
+					<ul>
+						<li>Check code quality</li>
+						<li>Coding standards, naming convention</li>
+						<li>Discuss and share suggestion among team members</li>
+					</ul>
+				</section>
+
+				<section>
+					<h4>Adding feature branch on develop</h4>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							// Switch to develop
+							git checkout develop
+
+							git merge --no-ff task-1
+
+							// remove the feature branch
+							git branch -d task-1
+
+							// Push the changes to git server
+							git push origin develop
+
+							// close pull request (PR) on git server
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Support Branches: Release</h3>
+					<ul>
+						<li>Prepare for next release</li>
+						<li>Alow develop branch to continously work on new set of feature for the next relase</li>
+						<li>Add new feature = not allowed</li>
+						<li>Minor bug fixes = allowed</li>
+						<li>Life time: till release is merged into develop and master branch</li>
+						<li>Naming Convention: release-*</li>
+						<li>Branch off from: develop</li>
+						<li>Merge back to: develop and master</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Starting release branch</h3>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							git checkout -b release-0.1 develop
+
+							/**
+							 * Add some meta data like version control,
+							 * release date & time, change log
+							 */
+							
+							git commit -am "Descriptive and meaningful commit message"
+							git push -u origin release-0.1
+
+							/**
+							 * open pull request (PR)
+							 */
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Finishing relase branch</h3>
+					<h4>Start with master branch</h4>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							git checkout master
+
+							git merge --no-ff release-0.1
+
+							git push origin master
+
+							git tag -a 0.1
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Finishing release branch (Contd...)</h3>
+					<h4>Finish with develop branch</h4>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							// Switch develop
+							git checkout develop
+
+							git merge --no-ff release-0.1
+
+							git push origin develop
+
+							// Remove release branch
+							git branch -d release-0.1
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Support Branches: Hotfix</h3>
+					<ul>
+						<li>Fix critial bug in production</li>
+						<li>Team memeber continues work on develop branch</li>
+						<li>Life time: till bug is fixed and merged into develop and master</li>
+						<li>
+							Naming Convention: hotfix-*
+							<ul>
+								<li>Mirro production version while naming</li>
+								<li>If production version: 0.1 then hotfix version: 0.1.1</li>
+							</ul>
+						</li>
+						<li>Branch off from: master</li>
+						<li>Merge back to: develop and master</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Starting hotfix branch</h3>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							git checkout -b hotfix-0.1.1 master
+
+							/**
+							 * Fix bug and add some informatio about bug
+							 */
+							
+							git commit -am "Descriptive and meaningful commit message"
+							git push -u origin hotfix-0.1.1
+
+							/**
+							 * open pull request (PR)
+							 */
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Finishing hotfix branch</h3>
+					<h4>Start with master branch</h4>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							git checkout master
+
+							git merge --no-ff hotfix-0.1.1
+
+							// updating version
+							git tag -a 0.1.1
+
+							git push origin master
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Finishing hotfix branch (Contd...)</h3>
+					<h4>Finish with develop branch</h4>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+							// Switch develop
+							git checkout develop
+
+							git merge --no-ff hotfix-0.1.1
+
+							git push origin develop
+
+							// Remove hotfix branch
+							git branch -d hotfix-0.1.1
+						</code>
+					</pre>
+				</section>
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h3>Vertical Slides</h3>
+						<p>Slides can be nested inside of each other.</p>
+						<p>Use the <em>Space</em> key to navigate through all slides.</p>
+						<br>
+						<a href="#" class="navigate-down">
+							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section>
+						<h3>Basement Level 1</h3>
+						<p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
+					</section>
+					<section>
+						<h3>Basement Level 2</h3>
+						<p>That's it, time to go back up.</p>
+						<br>
+						<a href="#/2">
+							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
+						</a>
+					</section>
+				</section>
+
+				<section>
+					<h3>Slides</h3>
+					<p>
+						Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at <a href="https://slides.com" target="_blank">https://slides.com</a>.
+					</p>
+				</section>
+
+				<section>
+					<h3>Point of View</h3>
+					<p>
+						Press <strong>ESC</strong> to enter the slide overview.
+					</p>
+					<p>
+						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
+					</p>
+				</section>
+
+				<section>
+					<h3>Touch Optimized</h3>
+					<p>
+						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
+					</p>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Markdown support
+
+						Write content using inline or external Markdown.
+						Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
+
+						```
+						<section data-markdown>
+						  ## Markdown support
+
+						  Write content using inline or external Markdown.
+						  Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
+						</section>
+						```
+					</script>
+				</section>
+
+				<section>
+					<section id="fragments">
+						<h3>Fragments</h3>
+						<p>Hit the next arrow...</p>
+						<p class="fragment">... to step through ...</p>
+						<p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
+
+						<aside class="notes">
+							This slide has fragments which are also stepped through in the notes window.
+						</aside>
+					</section>
+					<section>
+						<h3>Fragment Styles</h3>
+						<p>There's different types of fragments, like:</p>
+						<p class="fragment grow">grow</p>
+						<p class="fragment shrink">shrink</p>
+						<p class="fragment fade-out">fade-out</p>
+						<p class="fragment fade-up">fade-up (also down, left and right!)</p>
+						<p class="fragment current-visible">current-visible</p>
+						<p>Highlight <span class="fragment highlight-red">red</span> <span class="fragment highlight-blue">blue</span> <span class="fragment highlight-green">green</span></p>
+					</section>
+				</section>
+
+				<section id="transitions">
+					<h3>Transition Styles</h3>
+					<p>
+						You can select from different transitions, like: <br>
+						<a href="?transition=none#/transitions">None</a> -
+						<a href="?transition=fade#/transitions">Fade</a> -
+						<a href="?transition=slide#/transitions">Slide</a> -
+						<a href="?transition=convex#/transitions">Convex</a> -
+						<a href="?transition=concave#/transitions">Concave</a> -
+						<a href="?transition=zoom#/transitions">Zoom</a>
+					</p>
+				</section>
+
+				<section id="themes">
+					<h3>Themes</h3>
+					<p>
+						reveal.js comes with a few themes built in: <br>
+						<!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black (default)</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a> <br>
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/blood.css'); return false;">Blood</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>
+					</p>
+				</section>
+
+				<section>
+					<section data-background="#dddddd">
+						<h3>Slide Backgrounds</h3>
+						<p>
+							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
+						</p>
+						<a href="#" class="navigate-down">
+							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
+						<h3>Image Backgrounds</h3>
+						<pre><code class="hljs">&lt;section data-background="image.png"&gt;</code></pre>
+					</section>
+					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
+						<h3>Tiled Backgrounds</h3>
+						<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
+					</section>
+					<section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-color="#000000">
+						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
+							<h3>Video Backgrounds</h3>
+							<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
+						</div>
+					</section>
+					<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
+						<h3>... and GIFs!</h3>
+					</section>
+				</section>
+
+				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+					<h3>Background Transitions</h3>
+					<p>
+						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
+					</p>
+					<pre><code class="hljs">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
+				</section>
+
+				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
+					<h3>Background Transitions</h3>
+					<p>
+						You can override background transitions per-slide.
+					</p>
+					<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
+				</section>
+
+				<section>
+					<h3>Pretty Code</h3>
+					<pre><code class="hljs" data-trim contenteditable>
+function linkify( selector ) {
+  if( supports3DTransforms ) {
+
+    var nodes = document.querySelectorAll( selector );
+
+    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
+      var node = nodes[i];
+
+      if( !node.className ) {
+        node.className += ' roll';
+      }
+    }
+  }
+}
+					</code></pre>
+					<p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
+				</section>
+
+				<section>
+					<h3>Marvelous List</h3>
+					<ul>
+						<li>No order here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Fantastic Ordered List</h3>
+					<ol>
+						<li>One is smaller than...</li>
+						<li>Two is smaller than...</li>
+						<li>Three!</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>Tabular Tables</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>Item</th>
+								<th>Value</th>
+								<th>Quantity</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Apples</td>
+								<td>$1</td>
+								<td>7</td>
+							</tr>
+							<tr>
+								<td>Lemonade</td>
+								<td>$2</td>
+								<td>18</td>
+							</tr>
+							<tr>
+								<td>Bread</td>
+								<td>$3</td>
+								<td>2</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section>
+					<h3>Clever Quotes</h3>
+					<p>
+						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">The nice thing about standards is that there are so many to choose from</q> and block:
+					</p>
+					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
+						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+					</blockquote>
+				</section>
+
+				<section>
+					<h3>Intergalactic Interconnections</h3>
+					<p>
+						You can link between slides internally,
+						<a href="#/2/3">like this</a>.
+					</p>
+				</section>
+
+				<section>
+					<h3>Speaker View</h3>
+					<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
+					<p>Press the <em>S</em> key to try it out.</p>
+
+					<aside class="notes">
+						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					</aside>
+				</section>
+
+				<section>
+					<h3>Export to PDF</h3>
+					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
+					<iframe data-src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+				</section>
+
+				<section>
+					<h3>Global State</h3>
+					<p>
+						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
+						will be added as a class to the document element when the slide is open. This lets you
+						apply broader style changes, like switching the page background.
+					</p>
+				</section>
+
+				<section data-state="customevent">
+					<h3>State Events</h3>
+					<p>
+						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
+					</p>
+					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
+Reveal.addEventListener( 'customevent', function() {
+	console.log( '"customevent" has fired' );
+} );
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Take a Moment</h3>
+					<p>
+						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
+					</p>
+				</section>
+
+				<section>
+					<h3>Much more</h3>
+					<ul>
+						<li>Right-to-left support</li>
+						<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
+						<li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
+						<li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
+						<li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
+					</ul>
+				</section>
+
+				<section style="text-align: left;">
+					<h1>THE END</h1>
+					<p>
+						- <a href="https://slides.com">Try the online editor</a> <br>
+						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
+					</p>
+				</section>
+
 			</div>
+
 		</div>
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
 
 		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
+
+			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
 				]
 			});
+
 		</script>
+
 	</body>
 </html>
